@@ -40,101 +40,34 @@
             text-align: center;
             color: #ff7f50;
         }
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-            overflow: hidden;
-            transition: transform 0.2s;
-            width: 300px;
-            flex: 1 1 calc(33.333% - 40px);
-            margin: 20px;
-        }
-        .card img {
+        .swiper-container {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            cursor: pointer;
+            height: 400px;
         }
-        .card:hover {
-            transform: translateY(-10px);
-        }
-        .card-content {
-            padding: 20px;
-        }
-        .card-content p {
-            margin: 0;
-            color: #666;
-        }
-        .cards-container {
+        .swiper-slide {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .swiper-slide img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
         }
-        ul li {
-            padding: 5px 0;
+        .swiper-slide p {
+            font-size: 1rem;
+            color: #555;
+            max-width: 80%;
         }
-        p {
-            line-height: 1.6;
-        }
-        .section p {
-            max-width: 800px;
-            margin: 0 auto 20px auto;
-        }
-        .section ul {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.9);
-        }
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-        .modal-content, #caption {
-            animation-name: zoom;
-            animation-duration: 0.6s;
-        }
-        @keyframes zoom {
-            from {transform:scale(0)}
-            to {transform:scale(1)}
-        }
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
+        .swiper-pagination-bullet {
+            background: #ff7f50;
         }
     </style>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 </head>
 <body>
 
@@ -147,49 +80,39 @@
 <div id="home" class="section">
     <h2>Quizmi</h2>
     <p style="text-align: center; font-style: italic; color: #20b2aa;">Listen, Learn, Lead</p> <!-- Mint color -->
-    <div class="cards-container">
-        <div class="card">
-            <img src="assets/chatpage.jpg" alt="Chat Page" onclick="openModal(this)">
-            <div class="card-content">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="assets/chatpage.jpg" alt="Chat Page">
                 <p>This is a page that's interactive. You can create individual chat groups, saving data, and distributing it to groups.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/flashcardpage.jpg" alt="Flashcard Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/flashcardpage.jpg" alt="Flashcard Page">
                 <p>Take notes, recordings, and use Quizmi to make flashcards to help you study.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/recordingpage.jpg" alt="Recording Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/recordingpage.jpg" alt="Recording Page">
                 <p>Record any audio up to any length on the recording page to transcribe into text for further use in Quizmi.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page">
                 <p>Record all files internally within the document, save with others, or share with others and use any files within the rest of the app.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page">
                 <p>Create PowerPoints from any audio, transcription, or scanned document within the app very easily within seconds.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page">
                 <p>Create slide decks that can go into PowerPoint or Google Slides using recordings, scanned documents, etc.</p>
             </div>
-        </div>
-        <div class="card">
-            <img src="assets/practicetestpage.jpg" alt="Practice Test Page" onclick="openModal(this)">
-            <div class="card-content">
+            <div class="swiper-slide">
+                <img src="assets/practicetestpage.jpg" alt="Practice Test Page">
                 <p>Test yourself on the content that you have scanned within the app in different ways and create practice tests based on the content.</p>
             </div>
         </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
     </div>
 </div>
 
@@ -280,6 +203,15 @@
         });
         document.getElementById(sectionId).style.display = 'block';
     }
+
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
 
     function openModal(imgElement) {
         var modal = document.getElementById("myModal");
