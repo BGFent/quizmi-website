@@ -62,10 +62,19 @@
             border: 1px solid #ddd;
             border-radius: 10px;
         }
-        .carousel p {
+        .carousel .text-content {
+            max-width: 80%;
+            margin: 0 auto;
             font-size: 1.1rem;
             color: #555;
-            max-width: 80%;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: -10px;
+        }
+        .carousel .text-content p {
+            margin: 0;
         }
         .carousel button {
             position: absolute;
@@ -76,6 +85,10 @@
             color: white;
             padding: 10px;
             cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
         }
         .carousel button:hover {
             background-color: #f4a460;
@@ -147,31 +160,45 @@
             <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
             <div class="carousel-content">
                 <img src="assets/chatpage.jpg" alt="Chat Page">
-                <p>This is a page that's interactive. You can create individual chat groups, saving data, and distributing it to groups.</p>
+                <div class="text-content">
+                    <p>This is a page that's interactive. You can create individual chat groups, saving data, and distributing it to groups.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/flashcardpage.jpg" alt="Flashcard Page">
-                <p>Take notes, recordings, and use Quizmi to make flashcards to help you study.</p>
+                <div class="text-content">
+                    <p>Take notes, recordings, and use Quizmi to make flashcards to help you study.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/recordingpage.jpg" alt="Recording Page">
-                <p>Record any audio up to any length on the recording page to transcribe into text for further use in Quizmi.</p>
+                <div class="text-content">
+                    <p>Record any audio up to any length on the recording page to transcribe into text for further use in Quizmi.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page">
-                <p>Record all files internally within the document, save with others, or share with others and use any files within the rest of the app.</p>
+                <div class="text-content">
+                    <p>Record all files internally within the document, save with others, or share with others and use any files within the rest of the app.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page">
-                <p>Create PowerPoints from any audio, transcription, or scanned document within the app very easily within seconds.</p>
+                <div class="text-content">
+                    <p>Create PowerPoints from any audio, transcription, or scanned document within the app very easily within seconds.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page">
-                <p>Create slide decks that can go into PowerPoint or Google Slides using recordings, scanned documents, etc.</p>
+                <div class="text-content">
+                    <p>Create slide decks that can go into PowerPoint or Google Slides using recordings, scanned documents, etc.</p>
+                </div>
             </div>
             <div class="carousel-content" style="display:none;">
                 <img src="assets/practicetestpage.jpg" alt="Practice Test Page">
-                <p>Test yourself on the content that you have scanned within the app in different ways and create practice tests based on the content.</p>
+                <div class="text-content">
+                    <p>Test yourself on the content that you have scanned within the app in different ways and create practice tests based on the content.</p>
+                </div>
             </div>
             <button class="next" onclick="changeSlide(1)">&#10095;</button>
         </div>
