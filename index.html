@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizmi</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         body {
             font-family: 'Poppins', Arial, sans-serif;
@@ -50,31 +48,43 @@
             color: #20b2aa; /* Mint color */
             margin-bottom: 40px;
         }
-        .swiper-container {
-            width: 100%;
-            height: auto;
-        }
-        .swiper-slide {
+        .carousel {
+            position: relative;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
+            align-items: center;
+            overflow: hidden;
         }
-        .swiper-slide img {
+        .carousel img {
             max-width: 80%;
             height: auto;
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 10px;
         }
-        .swiper-slide p {
+        .carousel p {
             font-size: 1.1rem;
             color: #555;
             max-width: 80%;
         }
-        .swiper-pagination-bullet {
-            background: #ff7f50;
+        .carousel button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ff7f50;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .carousel button:hover {
+            background-color: #f4a460;
+        }
+        .carousel button.prev {
+            left: 10px;
+        }
+        .carousel button.next {
+            right: 10px;
         }
         .modal {
             display: none;
@@ -133,39 +143,37 @@
     <div class="container">
         <h2>Quizmi</h2>
         <p class="tagline">Listen, Learn, Lead</p>
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/chatpage.jpg" alt="Chat Page">
-                    <p>This is a page that's interactive. You can create individual chat groups, saving data, and distributing it to groups.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/flashcardpage.jpg" alt="Flashcard Page">
-                    <p>Take notes, recordings, and use Quizmi to make flashcards to help you study.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/recordingpage.jpg" alt="Recording Page">
-                    <p>Record any audio up to any length on the recording page to transcribe into text for further use in Quizmi.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page">
-                    <p>Record all files internally within the document, save with others, or share with others and use any files within the rest of the app.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page">
-                    <p>Create PowerPoints from any audio, transcription, or scanned document within the app very easily within seconds.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page">
-                    <p>Create slide decks that can go into PowerPoint or Google Slides using recordings, scanned documents, etc.</p>
-                </div>
-                <div class="swiper-slide" onclick="openModal(this)">
-                    <img src="assets/practicetestpage.jpg" alt="Practice Test Page">
-                    <p>Test yourself on the content that you have scanned within the app in different ways and create practice tests based on the content.</p>
-                </div>
+        <div class="carousel">
+            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+            <div class="carousel-content">
+                <img src="assets/chatpage.jpg" alt="Chat Page">
+                <p>This is a page that's interactive. You can create individual chat groups, saving data, and distributing it to groups.</p>
             </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/flashcardpage.jpg" alt="Flashcard Page">
+                <p>Take notes, recordings, and use Quizmi to make flashcards to help you study.</p>
+            </div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/recordingpage.jpg" alt="Recording Page">
+                <p>Record any audio up to any length on the recording page to transcribe into text for further use in Quizmi.</p>
+            </div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page">
+                <p>Record all files internally within the document, save with others, or share with others and use any files within the rest of the app.</p>
+            </div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page">
+                <p>Create PowerPoints from any audio, transcription, or scanned document within the app very easily within seconds.</p>
+            </div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page">
+                <p>Create slide decks that can go into PowerPoint or Google Slides using recordings, scanned documents, etc.</p>
+            </div>
+            <div class="carousel-content" style="display:none;">
+                <img src="assets/practicetestpage.jpg" alt="Practice Test Page">
+                <p>Test yourself on the content that you have scanned within the app in different ways and create practice tests based on the content.</p>
+            </div>
+            <button class="next" onclick="changeSlide(1)">&#10095;</button>
         </div>
     </div>
 </div>
@@ -177,18 +185,15 @@
     <div id="caption"></div>
 </div>
 
-<script src="scripts.js"></script>
-<!-- Swiper JS -->
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script>
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-content');
+
+    function changeSlide(n) {
+        slides[currentSlide].style.display = 'none';
+        currentSlide = (currentSlide + n + slides.length) % slides.length;
+        slides[currentSlide].style.display = 'block';
+    }
 
     function openModal(slide) {
         var modal = document.getElementById("myModal");
@@ -203,6 +208,9 @@
         var modal = document.getElementById("myModal");
         modal.style.display = "none";
     }
+
+    // Initialize the first slide
+    slides[currentSlide].style.display = 'block';
 </script>
 </body>
 </html>
