@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribe-E Files</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Add any specific styles for your files page */
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .login-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .files-container {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .file-item {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms and Conditions</a>
+</div>
+
+<div id="login-container" class="login-container">
+    <h2>Log in to View Your Files</h2>
+    <button id="login-button">Log In with Google</button>
+</div>
+
+<div id="files-container" class="files-container" style="display: none;">
+    <h2>Your Files</h2>
+    <div id="file-list"></div>
+</div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js"></script>
+
+<script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAtWCpmX3OvcUmttn-NigyDAnM1WHPHSDc",
+        authDomain: "quizmi-d7647.firebaseapp.com",
+        projectId: "quizmi-d7647",
+        storageBucket: "quizmi-d7647.appspot.com",
+        messagingSenderId: "999287045408",
+        appId: "1:999287045408:web:b3c8006462fd533a0bab45",
+        measurementId: "G-8NXNNLEH4Y"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+    const db = firebase.firestore();
+
+    // Login button functionality
+    document.getElementById('login-button').addEventListener('click', function() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then((result) => {
+            // User signed in
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('files-container').style.display = 'block';
+            loadFiles();
+        }).catch((error) => {
+            console.error('Error during sign-in:', error);
+        });
+    });
+
+    // Load files from Firebase Storage
+    function loadFiles() {
+        const user = auth.currentUser;
+        if (user) {
+            const storageRef = storage.ref(user.uid);  // Assuming files are stored under user UID
+            storageRef.listAll().then((result) => {
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = '';
+                result.items.forEach((fileRef) => {
+                    fileRef.getDownloadURL().then((url) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.classList.add('file-item');
+                        fileItem.innerHTML = `<a href="${url}" target="_blank">${fileRef.name}</a>`;
+                        fileList.appendChild(fileItem);
+                    });
+                });
+            }).catch((error) => {
+                console.error('Error listing files:', error);
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
