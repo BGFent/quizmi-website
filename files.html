@@ -72,11 +72,16 @@
     const auth = getAuth(app);
     const storage = getStorage(app);
 
+    // Debugging: Check if Firebase has been initialized
+    console.log('Firebase initialized:', app);
+
     // Login button functionality
     document.getElementById('login-button').addEventListener('click', function() {
+        console.log('Login button clicked');
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
+                console.log('User signed in:', result.user);
                 // User signed in
                 document.getElementById('login-container').style.display = 'none';
                 document.getElementById('files-container').style.display = 'block';
@@ -91,6 +96,7 @@
     function loadFiles() {
         const user = auth.currentUser;
         if (user) {
+            console.log('Loading files for user:', user.uid);
             const storageRef = ref(storage, user.uid);  // Assuming files are stored under user UID
             listAll(storageRef)
                 .then((result) => {
