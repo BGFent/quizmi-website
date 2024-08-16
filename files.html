@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scribe-E</title>
-    <meta name="google-site-verification" content="7UGCu31J4UgzfE1T3W_BgDTsbCDxwArZS4v1l2hLJDQ" />
+    <title>Scribe-E Files</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        /* Add any specific styles for your files page */
         body {
             font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
@@ -14,134 +14,19 @@
             background-color: #f9f9f9;
             color: #333;
         }
-        .navbar {
-            background-color: #ff7f50; /* Coral color */
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .navbar a {
-            float: left;
-            display: block;
-            color: white;
+        .login-container {
             text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-            font-weight: bold;
+            margin-top: 50px;
         }
-        .navbar a:hover {
-            background-color: #f4a460; /* Lighter coral color */
-        }
-        .section {
-            padding: 60px 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        h2 {
-            color: #ff7f50;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p.tagline {
-            font-style: italic;
-            color: #20b2aa; /* Mint color */
-            margin-bottom: 40px;
-        }
-        .carousel {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .carousel img {
-            max-width: 80%;
-            height: auto;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-        }
-        .carousel .text-content {
-            max-width: 80%;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            color: #555;
+        .files-container {
+            margin: 20px;
+            padding: 20px;
             background-color: #fff;
             border-radius: 10px;
-            padding: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: -10px;
         }
-        .carousel .text-content p {
-            margin: 0;
-        }
-        .carousel button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #ff7f50;
-            border: none;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 20px;
-        }
-        .carousel button:hover {
-            background-color: #f4a460;
-        }
-        .carousel button.prev {
-            left: 10px;
-        }
-        .carousel button.next {
-            right: 10px;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 60px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-        .modal-content {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-        }
-        .close {
-            position: absolute;
-            top: 15px;
-            right: 35px;
-            color: #f1f1f1;
-            font-size: 40px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        #caption {
-            margin: auto;
-            display: block;
-            width: 80%;
-            max-width: 700px;
-            text-align: center;
-            color: #ccc;
-            padding: 10px 0;
-            height: 150px;
+        .file-item {
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -151,95 +36,77 @@
     <a href="index.html">Home</a>
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="terms.html">Terms and Conditions</a>
-    <a href="files.html">Your Files</a> <!-- New link to the files page -->
 </div>
 
-<div id="home" class="section">
-    <div class="container">
-        <h2>Scribe-E</h2>
-        <p class="tagline">Listen, Learn, Lead</p>
-        <div class="carousel">
-            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-            <div class="carousel-content">
-                <img src="assets/chatpage.jpg" alt="Chat Page">
-                <div class="text-content">
-                    <p>Group up with friends or colleagues to exchange texts and Scribe-E information!</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/flashcardpage.jpg" alt="Flashcard Page">
-                <div class="text-content">
-                    <p>Create notes, flashcards, practices tests and more with Scribe-E transformative experience!</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/recordingpage.jpg" alt="Recording Page">
-                <div class="text-content">
-                    <p>Record audio up to any length on the recording page to transcribe into text for further use in Scribe-E.</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/savedlibrarypage.jpg" alt="Saved Library Page">
-                <div class="text-content">
-                    <p>Save and share all Scribe-E files with friends and colleagues within the Scribe-E environment!</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/slidedeckexample.jpg" alt="Slide Deck Example Page">
-                <div class="text-content">
-                    <p>Create PowerPoints from any audio, transcription, or scanned document very easily within seconds.</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/slidedeckpage.jpg" alt="Slide Deck Page">
-                <div class="text-content">
-                    <p>Customize your presentation to make the perfect slide deck!</p>
-                </div>
-            </div>
-            <div class="carousel-content" style="display:none;">
-                <img src="assets/practicetestpage.jpg" alt="Practice Test Page">
-                <div class="text-content">
-                    <p>Generate practice tests from any collected information within the app for additional ideas and study aid!</p>
-                </div>
-            </div>
-            <button class="next" onclick="changeSlide(1)">&#10095;</button>
-        </div>
-    </div>
+<div id="login-container" class="login-container">
+    <h2>Log in to View Your Files</h2>
+    <button id="login-button">Log In with Google</button>
 </div>
 
-<!-- Modal for full-size images -->
-<div id="myModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="img01">
-    <div id="caption"></div>
+<div id="files-container" class="files-container" style="display: none;">
+    <h2>Your Files</h2>
+    <div id="file-list"></div>
 </div>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js"></script>
 
 <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-content');
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAtWCpmX3OvcUmttn-NigyDAnM1WHPHSDc",
+        authDomain: "quizmi-d7647.firebaseapp.com",
+        projectId: "quizmi-d7647",
+        storageBucket: "quizmi-d7647.appspot.com",
+        messagingSenderId: "999287045408",
+        appId: "1:999287045408:web:b3c8006462fd533a0bab45",
+        measurementId: "G-8NXNNLEH4Y"
+    };
 
-    function changeSlide(n) {
-        slides[currentSlide].style.display = 'none';
-        currentSlide = (currentSlide + n + slides.length) % slides.length;
-        slides[currentSlide].style.display = 'block';
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+    const db = firebase.firestore();
+
+    // Login button functionality
+    document.getElementById('login-button').addEventListener('click', function() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then((result) => {
+            // User signed in
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('files-container').style.display = 'block';
+            loadFiles();
+        }).catch((error) => {
+            console.error('Error during sign-in:', error);
+        });
+    });
+
+    // Load files from Firebase Storage
+    function loadFiles() {
+        const user = auth.currentUser;
+        if (user) {
+            const storageRef = storage.ref(user.uid);  // Assuming files are stored under user UID
+            storageRef.listAll().then((result) => {
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = '';
+                result.items.forEach((fileRef) => {
+                    fileRef.getDownloadURL().then((url) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.classList.add('file-item');
+                        fileItem.innerHTML = `<a href="${url}" target="_blank">${fileRef.name}</a>`;
+                        fileList.appendChild(fileItem);
+                    });
+                });
+            }).catch((error) => {
+                console.error('Error listing files:', error);
+            });
+        }
     }
-
-    function openModal(slide) {
-        var modal = document.getElementById("myModal");
-        var modalImg = document.getElementById("img01");
-        var captionText = document.getElementById("caption");
-        modal.style.display = "block";
-        modalImg.src = slide.querySelector('img').src;
-        captionText.innerHTML = slide.querySelector('p').innerText;
-    }
-
-    function closeModal() {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
-    }
-
-    // Initialize the first slide
-    slides[currentSlide].style.display = 'block';
 </script>
+
 </body>
 </html>
