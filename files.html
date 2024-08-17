@@ -101,28 +101,29 @@
 
     // Load files from Firebase Storage
     function loadFiles() {
-        const user = auth.currentUser;
-        if (user) {
-            console.log('Loading files for user:', user.uid);
-            const storageRef = ref(storage, user.uid);  // Assuming files are stored under user UID
-            listAll(storageRef)
-                .then((result) => {
-                    const fileList = document.getElementById('file-list');
-                    fileList.innerHTML = '';
-                    result.items.forEach((fileRef) => {
-                        getDownloadURL(fileRef).then((url) => {
-                            const fileItem = document.createElement('div');
-                            fileItem.classList.add('file-item');
-                            fileItem.innerHTML = `<a href="${url}" target="_blank">${fileRef.name}</a>`;
-                            fileList.appendChild(fileItem);
-                        });
+    const user = auth.currentUser;
+    if (user) {
+        console.log('Loading files for user:', user.uid);
+        const storageRef = ref(storage, `audio/${user.uid}`);  // Adjusted to match the storage path
+        listAll(storageRef)
+            .then((result) => {
+                const fileList = document.getElementById('file-list');
+                fileList.innerHTML = '';
+                result.items.forEach((fileRef) => {
+                    getDownloadURL(fileRef).then((url) => {
+                        const fileItem = document.createElement('div');
+                        fileItem.classList.add('file-item');
+                        fileItem.innerHTML = `<a href="${url}" target="_blank">${fileRef.name}</a>`;
+                        fileList.appendChild(fileItem);
                     });
-                })
-                .catch((error) => {
-                    console.error('Error listing files:', error);
                 });
-        }
+            })
+            .catch((error) => {
+                console.error('Error listing files:', error);
+            });
     }
+}
+
 </script>
 
 </body>
