@@ -229,15 +229,22 @@
         const subcollectionList = document.getElementById('subcollection-list');
         subcollectionList.innerHTML = '';
 
-        getDocs(collection(userDocRef)).then(snapshot => {
-            snapshot.forEach(subcollection => {
-                const subcollectionItem = document.createElement('div');
-                subcollectionItem.classList.add('collection-item');
-                subcollectionItem.innerHTML = `<a href="#" onclick="loadDocuments('${subcollection.id}')">${subcollection.id}</a>`;
-                subcollectionList.appendChild(subcollectionItem);
-            });
-        }).catch((error) => {
-            console.error('Error loading subcollections:', error);
+        // Loading subcollections
+        const subcollections = ['audio', 'transcriptions'];
+        subcollections.forEach(subcollectionName => {
+            const subcollectionRef = collection(userDocRef, subcollectionName);
+            getDocs(subcollectionRef)
+                .then((querySnapshot) => {
+                    if (!querySnapshot.empty) {
+                        const subcollectionItem = document.createElement('div');
+                        subcollectionItem.classList.add('collection-item');
+                        subcollectionItem.innerHTML = `<a href="#" onclick="loadDocuments('${subcollectionName}')">${subcollectionName}</a>`;
+                        subcollectionList.appendChild(subcollectionItem);
+                    }
+                })
+                .catch((error) => {
+                    console.error(`Error loading ${subcollectionName} subcollection:`, error);
+                });
         });
     }
 
