@@ -31,6 +31,10 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             position: relative;
+            word-wrap: break-word; /* Ensures long words wrap to the next line */
+            overflow: hidden;      /* Hides overflow content */
+            text-overflow: ellipsis; /* Adds an ellipsis (...) to indicate that the text is cut off */
+            max-width: 100%;       /* Ensures the content doesn't exceed the container width */
         }
         .delete-button {
             position: absolute;
