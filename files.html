@@ -72,6 +72,11 @@
     <h2>Your Data</h2>
     <div id="data-list"></div>
     <div id="subcollection-list"></div>
+    <div style="margin-top: 20px;">
+        <button id="delete-data-button" style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+            Delete All My Data
+        </button>
+    </div>
 </div>
 
 <div id="subcollection-container" class="subcollection-container" style="display: none;">
@@ -79,12 +84,27 @@
     <div id="document-list"></div>
 </div>
 
+<!-- Confirmation Dialog -->
+<div id="confirm-delete-dialog" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); z-index: 1000;">
+    <h2>Are you sure?</h2>
+    <p>This action will permanently delete all your data and cannot be undone.</p>
+    <button id="confirm-delete-button" style="background-color: red; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+        Yes, Delete All My Data
+    </button>
+    <button id="cancel-delete-button" style="padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+        Cancel
+    </button>
+</div>
+
+<!-- Overlay for dialog -->
+<div id="overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 500;"></div>
+
 <!-- Firebase SDK -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
     import { getStorage, ref, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js";
-    import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, collection, getDocs, deleteDoc, writeBatch } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDNIAizTWoqC3mLjAhq6m3gBg1M34ZRIf0",
@@ -209,18 +229,15 @@
         const subcollectionList = document.getElementById('subcollection-list');
         subcollectionList.innerHTML = '';
 
-        const subcollections = ['audio', 'transcriptions'];
-        subcollections.forEach(subcollectionName => {
-            getDocs(collection(userDocRef, subcollectionName))
-                .then((querySnapshot) => {
-                    const subcollectionItem = document.createElement('div');
-                    subcollectionItem.classList.add('collection-item');
-                    subcollectionItem.innerHTML = `<a href="#" onclick="loadDocuments('${subcollectionName}')">${subcollectionName}</a>`;
-                    subcollectionList.appendChild(subcollectionItem);
-                })
-                .catch((error) => {
-                    console.error(`Error loading ${subcollectionName} subcollection:`, error);
-                });
+        getDocs(collection(userDocRef)).then(snapshot => {
+            snapshot.forEach(subcollection => {
+                const subcollectionItem = document.createElement('div');
+                subcollectionItem.classList.add('collection-item');
+                subcollectionItem.innerHTML = `<a href="#" onclick="loadDocuments('${subcollection.id}')">${subcollection.id}</a>`;
+                subcollectionList.appendChild(subcollectionItem);
+            });
+        }).catch((error) => {
+            console.error('Error loading subcollections:', error);
         });
     }
 
@@ -273,6 +290,58 @@
                     console.error('Error loading QuizmiOutputs subcollection:', error);
                 });
         }
+    }
+
+    // Delete all user data
+    document.getElementById('delete-data-button').addEventListener('click', function() {
+        document.getElementById('confirm-delete-dialog').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    });
+
+    document.getElementById('cancel-delete-button').addEventListener('click', function() {
+        document.getElementById('confirm-delete-dialog').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    });
+
+    document.getElementById('confirm-delete-button').addEventListener('click', function() {
+        const user = auth.currentUser;
+        if (user) {
+            const userDocRef = doc(db, `users/${user.uid}`);
+            deleteUserData(userDocRef)
+                .then(() => {
+                    console.log('All data deleted for user:', user.uid);
+                    alert('All your data has been deleted.');
+                    auth.signOut();
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error deleting user data:', error);
+                });
+        }
+        document.getElementById('confirm-delete-dialog').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    });
+
+    async function deleteUserData(userDocRef) {
+        await deleteCollection(userDocRef, 'audio');
+        const transcriptionsCollectionRef = collection(userDocRef, 'transcriptions');
+        const transcriptionsSnapshot = await getDocs(transcriptionsCollectionRef);
+        for (const docSnap of transcriptionsSnapshot.docs) {
+            const transcriptionDocRef = doc(transcriptionsCollectionRef, docSnap.id);
+            await deleteCollection(transcriptionDocRef, 'QuizmiOutputs');
+        }
+        await deleteCollection(userDocRef, 'transcriptions');
+        await deleteDoc(userDocRef);
+    }
+
+    async function deleteCollection(docRef, subcollectionName) {
+        const subcollectionRef = collection(docRef, subcollectionName);
+        const subcollectionSnapshot = await getDocs(subcollectionRef);
+        const batch = writeBatch(db);
+        subcollectionSnapshot.docs.forEach((doc) => {
+            batch.delete(doc.ref);
+        });
+        await batch.commit();
     }
 </script>
 
