@@ -55,6 +55,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js";
     import { getStorage, ref, listAll, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-storage.js";
+    import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app-check.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -71,6 +72,12 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const storage = getStorage(app);
+
+    // Initialize Firebase App Check with reCAPTCHA v3
+    const appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider('6LfQlCgqAAAAADiBp14SH6JjIRgpV0eq7A1amFFL'), // Your actual site key
+        isTokenAutoRefreshEnabled: true // Automatically refresh the token
+    });
 
     // Debugging: Check if Firebase has been initialized
     console.log('Firebase initialized:', app);
